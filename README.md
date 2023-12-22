@@ -57,9 +57,26 @@ We are using the database **devmsass** in *development*. We have the following s
 ```
 
 ## API
-* `GET /api/mutuals/:name`
-* `GET /api/mutuals`
-* `POST /api/mutuals/creation`
+* `GET /api/mutuals/:name` to get a mutual using his name.
+* `GET /api/mutuals` to get all the mutuals.
+* `GET /api/mutuals/:name/admins` to get all the admins of a mutual.
+* `GET /api/mutuals/:name/package` to check if a mutual is a package or not.
+* `GET /api/mutuals/total` to get the total number of mutuals.
+* `POST /api/mutuals/creation` to create a mutual.
+* `PUT /api/mutuals/:name/add` to add a member to a mutual.
+* `DELETE /api/mutuals/:name/delete` to delete a mutual.
 
 ## Tests
-Launched with the script `npm test` which is `jest --watchAll`. There is only the file `mutuals.test.js` which has ? tests :
+Launched with the script `npm test` which is `jest --watchAll --detectOpenHandles`. There is only the file `mutuals.test.js` which has ? tests :
+* Test the database connection
+* Creating a mutual
+* Creating mutuals
+* Mutuals with same names
+* Get a mutual
+* Get mutuals
+* Join a mutual
+* Get admins
+* Is a mutual a package ?
+
+
+During the tests, we have some issues with the asynchronous behaviour of these functions.

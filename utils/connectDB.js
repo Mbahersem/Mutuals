@@ -5,7 +5,7 @@ dotenv.config({path: "../.env"});
 
 mongoose.set("strictQuery", false);
 
-const mongoDB = "mongodb://127.0.0.1:27017/devmsass";
+const mongoDB = process.env.MONGODB_URI_DEV;
 
 async function connectDB() {
     try {

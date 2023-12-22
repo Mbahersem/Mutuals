@@ -20,7 +20,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "jest --watchAll --detectOpenHandles",
+    "devStart": "nodemon index.js -r dotenv/config"
   },
   "repository": {
     "type": "git",

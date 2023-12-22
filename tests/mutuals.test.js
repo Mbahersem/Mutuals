@@ -9,13 +9,13 @@ let conn;
 
 beforeAll(async () => {
     conn = mongoose.createConnection("mongodb://127.0.0.1:27017/devmsass");
-    conn.createCollection("mutuals");
 });
 
 afterAll(async () => {
-    await conn.dropCollection("mutuals");
-    await conn.close();
-})
+    if(await conn.dropCollection("mutuals")){
+        await conn.close();
+    }
+});
 
 describe("Test the database connection", () => {
 
@@ -31,9 +31,9 @@ describe("Testing mutuals", () => {
             "type": "single",
             "helps": [{
                 "nameHelp": "Aide décès",
-                "desHelp": "Aide accordée lors du décès d'un membre de sa famille",
+                "desHelp": "Aide accordée lors du décès d'un membre de sa famille"
             }],
-            "emailUser": "mbailassem1st@gmail.com",
+            "emailUser": "mbailassem1st@gmail.com"
         });
         expect(res.statusCode).toBe(201);
     });
@@ -83,19 +83,29 @@ describe("Testing mutuals", () => {
     test("Get mutuals", async () => {
         const res = await request(server).get('/api/mutuals');
         expect(res.statusCode).toBe(200);
-        expect(res.body.length).toBeGreater(1);
+        expect(res.body.length).toBeGreaterThan(1);
     });
 
-    test("Invite members", () => {
+    test("Join a mutual", async () => {
+        const res = await request(server).put('/api/mutuals/Mutuelle/add').send({
+            "emailUser": "mam@gmail.com"
 
+        });
+        expect(res.statusCode).toBe(200);
     })
 
-    test("Join a mutual", () => {
+    test("Get admins", async () => {
+        const res = await request(server).get('/api/mutuals/Mutuelle/admins');
+        expect(res.statusCode).toBe(200);
+    });
 
-    })
+    test("Is a mutual a package ?", async () => {
+        const res = await request(server).get('/api/mutuals/Mutuelle/package');
+        expect(res.body).toEqual({val: false});
+    });
 });
 
-describe("Testing dues", () => {
+describe.skip("Testing dues", () => {
     test("Paying his dues", () => {
 
     })
@@ -104,7 +114,7 @@ describe("Testing dues", () => {
     })
 });
 
-describe("Testing refund", () => {
+describe.skip("Testing refund", () => {
     test("Get refund", () => {
 
     })
